@@ -1,12 +1,12 @@
 ## gitlab-webhook-branch-deployer
 
-Clones and maintains directories with the latest version of code in a branch.
+Clones and maintains directories with the latest contents of a branch.
 
 ### Usage
 
 ```$ ./gitlab-webhook.py --port 8000 git@github.com:vinodc/gitlab-webhook-branch-deployer.git /home/vinod/gwbd```
 
-This will run the process and listen on port 8000 for POST requests from Gitlab that correspond to the repository ```vinodc/gitlabe-webhook-branch-deployer```. When it receives a request, it will clone the branches that were
+This will run the process and listen on port 8000 for POST requests from Gitlab that correspond to the repository ```vinodc/gitlab-webhook-branch-deployer```. When it receives a request, it will clone the branches that were
 indicated as having been updated to the directory ```/home/vinod/gwbd```.
 
 It will ignore any branch with a '/' in it's name. This is intentional, to allow for feature branches or similar that will not be cloned.
