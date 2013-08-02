@@ -1,4 +1,4 @@
-#!/usr/bin/env python -tt
+#!/usr/bin/env python
 
 import os
 import json
@@ -45,8 +45,9 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 logger.error("Unable to identify branch to update: '%s'" %
                              data.get('ref', ''))
                 return self.error_response()
-            elif branch_to_update.find("/") != -1:
-                # Avoid feature branches and similar.
+            elif (branch_to_update.find("/") != -1 or
+                  branch_to_update in ['.', '..']):
+                # Avoid feature branches, malicious branches and similar.
                 logger.debug("Skipping update for branch '%s'." %
                              branch_to_update)
             else:
@@ -123,7 +124,6 @@ def run_command(command):
     return process.stdout.read()
         
 def get_arguments():
-    argparse.ArgumentParser(description='Process some integers.')
     parser = argparse.ArgumentParser(description=(
             'Deploy Gitlab branches in repository to a directory.'))
     parser.add_argument('repository', help=(
