@@ -2,6 +2,8 @@
 
 Clones and maintains directories with the latest contents of a branch.
 
+Tested and verified to work with Python 2.7.
+
 ### Usage
 
 ```$ ./gitlab-webhook.py --port 8000 git@github.com:vinodc/gitlab-webhook-branch-deployer.git /home/vinod/gwbd```
