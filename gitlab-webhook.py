@@ -60,6 +60,7 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                     self.remove_branch(branch_to_update)
                 else:
                     self.update_branch(branch_to_update)
+                self.post_install(branch_to_update)
                 return 
         else:
             logger.debug(("Repository '%s' is not our repository '%s'. "
@@ -105,6 +106,16 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-type", "text/plain")
         self.end_headers()
+
+    def post_install(self, branch):
+        script = "%s/%s/postinstall" % (branch_dir, branch)
+        if os.path.isfile(script):
+            if os.access(script, os.X_OK):
+                logger.info("Running post-install script: %s" % script)
+                run_command(script)
+            else:
+                logger.error("Post-install script is not executable: %s" %
+                             script)
 
     def error_response(self):
         self.log_error("Bad Request.")
