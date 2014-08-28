@@ -125,7 +125,8 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
 def run_command(command):
     logger.debug("Running command: %s" % command)
-    process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE,
+    process = subprocess.Popen(shlex.split(command.encode("ascii")),
+                               stdout=subprocess.PIPE,
                                stderr=subprocess.STDOUT)
     process.wait()
     if process.returncode != 0:
